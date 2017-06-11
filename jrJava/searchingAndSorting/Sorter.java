@@ -3,16 +3,19 @@ package jrJava.searchingAndSorting;
 public class Sorter {
 	
 	public static void main(String[] args) {
-		int[] a = createArray(300000);
+		int[] a = {11, 7, 17, 4, 20, 6, 15};
+		//int[] a = createArray(300000);
 		print(a);
-		long start = System.currentTimeMillis();
-
-		selectSort(a);
+		//long start = System.currentTimeMillis();
 		
-		long end = System.currentTimeMillis();
+		//bubbleSort(a);
+		//selectSort(a);
+		insertSort(a);
+		
+		//long end = System.currentTimeMillis();
 		print(a);
 		
-		System.out.println(end-start);
+		//System.out.println(end-start);
 	}
 	
 	public static void bubbleSort(int[] values) {
@@ -44,9 +47,9 @@ public class Sorter {
 	public static void selectSort(int[] values) {
 		int minIndex = 0;
 		int temp = 0;
-		int i, j;
+		int j;
 		
-		for(i=0; i<values.length-1; i++) {
+		for(int i=0; i<values.length-1; i++) {
 			// The following will find the index of which the minimum number is stored.
 			for(j=i+1; j<values.length; j++){
 				if(values[j]<values[minIndex])
@@ -62,7 +65,28 @@ public class Sorter {
 	}
 	
 	public static void insertSort(int[] values) {
+		int i, j, temp;
+		
+		// We will increase the window size from [0,1] to [0,length-1]
+		// We will use i to indicate the ending index of the window.
+		//i=6;
+		for(i=0; i<values.length;i++) {
+			// current window: [0, i].
+			// All elements up to (i-1) are sorted. values[i] is the one to be placed in the correct spot in the window.
+			temp = values[i];
 
+			for(j=i; j>=0; j--) {
+				if(values[j]>temp) 
+					values[j+1] = values[j];
+				else
+					break;     // Mr.Conlin (Java teacher), "REEEEEEEEEEEEEEEEEEEEEEEElEEEEE!"
+			}
+			
+			// Two Possibilities: 
+			// 1) Found new number that less than values[i], 
+			// 2) Could not find number less than or equal to the new guy, so we place it at values[0]
+			values[j+1] = temp;
+		}
 	}
 	
 	public static int[] createArray(int size) {
